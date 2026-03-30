@@ -131,7 +131,7 @@ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch filen
 If you discover a security vulnerability:
 
 1. **Private Disclosure**:
-   - Email: security@yourdomain.com
+   - Email - security@recipe-finder.com
    - Include detailed description
    - Provide reproduction steps
    - Allow reasonable time to fix

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeMagic - Indian Food Recipe Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>RecipeMagic</span>
+                </div>
+                <div class="nav-menu">
+                    <button class="nav-btn" onclick="searchRecipes()">
+                        <i class="fas fa-search"></i>
+                        <span>Search</span>
+                    </button>
+                    <button class="nav-btn" onclick="showDietaryFilters()">
+                        <i class="fas fa-filter"></i>
+                        <span>Dietary</span>
+                    </button>
+                    <button class="nav-btn" onclick="showMealPlanner()">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Meal Plan</span>
+                    </button>
+                    <button class="nav-btn" onclick="showChatAssistant()">
+                        <i class="fas fa-comments"></i>
+                        <span>Chat</span>
+                    </button>
+                    <button class="nav-btn" onclick="showImageUploadPage()">
+                        <i class="fas fa-camera"></i>
+                        <span>Photo</span>
+                    </button>
+                    <button class="nav-btn favorites-btn" onclick="showFavorites()">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                        <span class="favorites-count">0</span>
+                    </button>
+                    <button class="nav-btn" onclick="toggleDarkMode()">
+                        <i class="fas fa-moon"></i>
+                        <span>Theme</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="landing-main">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-main">Discover Authentic</span>
+                        <span class="title-accent">Indian Recipes</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Transform your ingredients into delicious Indian dishes with AI-powered recipes and step-by-step video tutorials
+                    </p>
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <i class="fas fa-magic"></i>
+                            <span>AI Recipe Generation</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-video"></i>
+                            <span>Video Tutorials</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Cooking Timer</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-bookmark"></i>
+                            <span>Save Favorites</span>
+                        </div>
+                    </div>
+                    <button class="cta-button" onclick="showIngredientPage()">
+                        <span>Start Cooking</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-ingredients">
+                        <div class="ingredient ingredient-1">🌶️</div>
+                        <div class="ingredient ingredient-2">🧅</div>
+                        <div class="ingredient ingredient-3">🍅</div>
+                        <div class="ingredient ingredient-4">🫒</div>
+                        <div class="ingredient ingredient-5">🥘</div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="image-placeholder">
+                            <i class="fas fa-bowl-food"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="how-it-works">
+                <h2>How RecipeMagic Works</h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <i class="fas fa-carrot"></i>
+                            <h3>Enter Ingredients</h3>
+                            <p>Add ingredients you have available at home or upload a photo for AI recognition</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <i class="fas fa-robot"></i>
+                            <h3>AI Magic</h3>
+                            <p>Our AI creates perfect Indian recipes tailored to your ingredients and preferences</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <i class="fas fa-play-circle"></i>
+                            <h3>Follow Along</h3>
+                            <p>Watch video tutorials and cook with our smart timer system</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features-showcase">
+                <h2>Powerful Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h3>AI Image Recognition</h3>
+                        <p>Upload photos of ingredients or dishes and let our AI identify them and create recipes</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h3>Voice Input</h3>
+                        <p>Speak your ingredients instead of typing - perfect for hands-free cooking</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Video Tutorials</h3>
+                        <p>Get step-by-step video guides from YouTube for every recipe</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Smart Timer</h3>
+                        <p>Multi-timer system with visual warnings for perfect cooking timing</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Save Favorites</h3>
+                        <p>Bookmark your favorite recipes and access them anytime</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h3>Dietary Filters</h3>
+                        <p>Filter recipes by dietary preferences like vegetarian, vegan, keto, and more</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="usage-guide">
+                <h2>Getting Started Guide</h2>
+                <div class="guide-tabs">
+                    <button class="tab-btn active" onclick="showGuideTab('text-input')">Text Input</button>
+                    <button class="tab-btn" onclick="showGuideTab('photo-upload')">Photo Upload</button>
+                    <button class="tab-btn" onclick="showGuideTab('advanced')">Advanced Features</button>
+                </div>
+                <div class="guide-content">
+                    <div class="guide-panel active" id="text-input-guide">
+                        <div class="guide-steps">
+                            <div class="guide-step">
+                                <div class="step-icon">1</div>
+                                <div class="step-details">
+                                    <h4>Click "Start Cooking"</h4>
+                                    <p>Begin your recipe journey by clicking the main button on the landing page</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">2</div>
+                                <div class="step-details">
+                                    <h4>Add Your Ingredients</h4>
+                                    <p>Type the ingredients you have at home, or use voice input by clicking the microphone button</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">3</div>
+                                <div class="step-details">
+                                    <h4>Set Servings</h4>
+                                    <p>Adjust the number of servings you need (1-12 people)</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">4</div>
+                                <div class="step-details">
+                                    <h4>Generate Recipe</h4>
+                                    <p>Click "Generate Recipe" and watch our AI create a perfect Indian recipe for you</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="guide-panel" id="photo-upload-guide">
+                        <div class="guide-steps">
+                            <div class="guide-step">
+                                <div class="step-icon">1</div>
+                                <div class="step-details">
+                                    <h4>Click "Photo" in Navigation</h4>
+                                    <p>Access our AI-powered image recognition features</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">2</div>
+                                <div class="step-details">
+                                    <h4>Choose Upload Mode</h4>
+                                    <p>Select "Ingredient Recognition" to identify ingredients or "Dish Recreation" to recreate dishes</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">3</div>
+                                <div class="step-details">
+                                    <h4>Upload Your Image</h4>
+                                    <p>Drag & drop or click to browse and select your photo</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">4</div>
+                                <div class="step-details">
+                                    <h4>Get AI Analysis</h4>
+                                    <p>Our AI analyzes the image and generates detailed recipes with video tutorials</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="guide-panel" id="advanced-guide">
+                        <div class="guide-steps">
+                            <div class="guide-step">
+                                <div class="step-icon">1</div>
+                                <div class="step-details">
+                                    <h4>Use Dietary Filters</h4>
+                                    <p>Set preferences for vegetarian, vegan, keto, gluten-free, and more</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">2</div>
+                                <div class="step-details">
+                                    <h4>Try Recipe Remix</h4>
+                                    <p>Transform any recipe to make it healthier, spicier, or suit different dietary needs</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">3</div>
+                                <div class="step-details">
+                                    <h4>Use Multi-Timer System</h4>
+                                    <p>Manage multiple cooking timers simultaneously for complex recipes</p>
+                                </div>
+                            </div>
+                            <div class="guide-step">
+                                <div class="step-icon">4</div>
+                                <div class="step-details">
+                                    <h4>Chat with AI Assistant</h4>
+                                    <p>Get cooking tips, ingredient substitutions, and recipe advice instantly</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Floating Help Assistant -->
+    <div class="floating-assistant" id="floating-assistant">
+        <button class="assistant-toggle" onclick="toggleFloatingAssistant()">
+            <i class="fas fa-robot"></i>
+            <span class="assistant-badge">?</span>
+        </button>
+        <div class="assistant-panel" id="assistant-panel">
+            <div class="assistant-header">
+                <h3>RecipeMagic Assistant</h3>
+                <button class="assistant-close" onclick="toggleFloatingAssistant()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="assistant-content">
+                <div class="help-sections">
+                    <div class="help-section">
+                        <h4><i class="fas fa-book"></i> Getting Started</h4>
+                        <ul>
+                            <li><a href="#" onclick="showHelpTopic('basics')">How to get recipes</a></li>
+                            <li><a href="#" onclick="showHelpTopic('ingredients')">Adding ingredients</a></li>
+                            <li><a href="#" onclick="showHelpTopic('photo')">Using photo upload</a></li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h4><i class="fas fa-star"></i> Features</h4>
+                        <ul>
+                            <li><a href="#" onclick="showHelpTopic('ai')">AI recipe generation</a></li>
+                            <li><a href="#" onclick="showHelpTopic('timer')">Cooking timer</a></li>
+                            <li><a href="#" onclick="showHelpTopic('favorites')">Saving favorites</a></li>
+                            <li><a href="#" onclick="showHelpTopic('dietary')">Dietary filters</a></li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h4><i class="fas fa-question-circle"></i> Help</h4>
+                        <ul>
+                            <li><a href="#" onclick="showHelpTopic('troubleshoot')">Troubleshooting</a></li>
+                            <li><a href="#" onclick="showHelpTopic('tips')">Cooking tips</a></li>
+                            <li><a href="#" onclick="showChatAssistant()">Chat with AI</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ingredient-page" class="page">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>RecipeMagic</span>
+                </div>
+                <div class="nav-menu">
+                    <button class="nav-btn back-btn" onclick="showLandingPage()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <button class="nav-btn favorites-btn" onclick="showFavorites()">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                        <span class="favorites-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="ingredient-main">
+            <div class="ingredient-header">
+                <h1>What ingredients do you have?</h1>
+                <p>Add ingredients available in your kitchen and we'll create perfect Indian recipes for you</p>
+                
+                <div class="serving-input-container">
+                    <label for="servings-input">
+                        <i class="fas fa-users"></i>
+                        Number of Servings:
+                    </label>
+                    <input type="number" id="servings-input" class="servings-input" min="1" max="12" value="4" placeholder="4">
+                    <span class="serving-hint">Adjust recipe for your family size</span>
+                </div>
+            </div>
+
+            <div class="ingredient-input-container">
+                <div class="ingredients-list" id="ingredients-list">
+                    <div class="ingredient-item">
+                        <input type="text" class="ingredient-input" placeholder="Ingredient 1 (e.g., chicken, onion, garlic)">
+                        <button class="remove-ingredient" onclick="removeIngredient(this)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="add-ingredient-btn" onclick="addIngredient()">
+                    <i class="fas fa-plus"></i>
+                    <span>Add More Ingredients</span>
+                </button>
+
+                <button class="add-ingredient-btn" onclick="startVoiceInput()" style="background: linear-gradient(135deg, #4caf50, #45a049);">
+                    <i class="fas fa-microphone"></i>
+                    <span>Voice Input</span>
+                </button>
+
+                <button class="generate-recipe-btn" onclick="generateRecipe()">
+                    <i class="fas fa-magic"></i>
+                    <span>Generate Recipe</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Image Upload Page -->
+    <div id="image-upload-page" class="page">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>RecipeMagic</span>
+                </div>
+                <div class="nav-menu">
+                    <button class="nav-btn back-btn" onclick="showLandingPage()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <button class="nav-btn favorites-btn" onclick="showFavorites()">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                        <span class="favorites-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="image-upload-main">
+            <div class="upload-header">
+                <h1>AI-Powered Recipe Creation</h1>
+                <p>Upload photos of ingredients or dishes to create amazing recipes</p>
+            </div>
+
+            <div class="upload-modes">
+                <div class="mode-card" onclick="showIngredientUpload()">
+                    <div class="mode-icon">
+                        <i class="fas fa-carrot"></i>
+                    </div>
+                    <h3>Ingredient Recognition</h3>
+                    <p>Take a photo of your ingredients and we'll identify them and create recipes</p>
+                    <button class="mode-btn">
+                        <i class="fas fa-camera"></i>
+                        Upload Ingredients
+                    </button>
+                </div>
+
+                <div class="mode-card" onclick="showDishUpload()">
+                    <div class="mode-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Dish Recreation</h3>
+                    <p>Upload a photo of a dish and we'll help you recreate it with step-by-step instructions</p>
+                    <button class="mode-btn">
+                        <i class="fas fa-camera"></i>
+                        Upload Dish
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Ingredient Upload Modal -->
+    <div id="ingredient-upload-modal" class="modal">
+        <div class="modal-content upload-modal-content">
+            <div class="modal-header">
+                <h2>Upload Ingredients Photo</h2>
+                <button class="close-modal" onclick="closeIngredientUpload()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-area" id="ingredient-upload-area">
+                    <div class="upload-placeholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your ingredients photo here</h3>
+                        <p>or click to browse</p>
+                        <input type="file" id="ingredient-file-input" accept="image/*" onchange="handleIngredientImageUpload(event)" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('ingredient-file-input').click()">
+                            <i class="fas fa-folder-open"></i>
+                            Choose File
+                        </button>
+                    </div>
+                    <div class="image-preview" id="ingredient-image-preview" style="display: none;">
+                        <img id="ingredient-preview-img" src="" alt="Ingredients preview">
+                        <div class="preview-actions">
+                            <button class="change-image-btn" onclick="document.getElementById('ingredient-file-input').click()">
+                                <i class="fas fa-exchange-alt"></i>
+                                Change Image
+                            </button>
+                            <button class="remove-image-btn" onclick="removeIngredientImage()">
+                                <i class="fas fa-trash"></i>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="serving-input-container">
+                    <label for="image-servings-input">
+                        <i class="fas fa-users"></i>
+                        Number of Servings:
+                    </label>
+                    <input type="number" id="image-servings-input" class="servings-input" min="1" max="12" value="4" placeholder="4">
+                </div>
+
+                <div class="upload-actions">
+                    <button class="analyze-ingredients-btn" onclick="analyzeIngredientImage()" id="analyze-ingredients-btn" disabled>
+                        <i class="fas fa-magic"></i>
+                        Analyze Ingredients
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dish Upload Modal -->
+    <div id="dish-upload-modal" class="modal">
+        <div class="modal-content upload-modal-content">
+            <div class="modal-header">
+                <h2>Upload Dish Photo</h2>
+                <button class="close-modal" onclick="closeDishUpload()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="dish-upload-area">
+                    <div class="upload-placeholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your dish photo here</h3>
+                        <p>or click to browse</p>
+                        <input type="file" id="dish-file-input" accept="image/*" onchange="handleDishImageUpload(event)" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('dish-file-input').click()">
+                            <i class="fas fa-folder-open"></i>
+                            Choose File
+                        </button>
+                    </div>
+                    <div class="image-preview" id="dish-image-preview" style="display: none;">
+                        <img id="dish-preview-img" src="" alt="Dish preview">
+                        <div class="preview-actions">
+                            <button class="change-image-btn" onclick="document.getElementById('dish-file-input').click()">
+                                <i class="fas fa-exchange-alt"></i>
+                                Change Image
+                            </button>
+                            <button class="remove-image-btn" onclick="removeDishImage()">
+                                <i class="fas fa-trash"></i>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dish-name-input-container">
+                    <label for="dish-name-input">
+                        <i class="fas fa-tag"></i>
+                        Dish Name (Optional):
+                    </label>
+                    <input type="text" id="dish-name-input" class="dish-name-input" placeholder="e.g., Butter Chicken, Biryani, etc.">
+                </div>
+
+                <div class="upload-actions">
+                    <button class="analyze-dish-btn" onclick="analyzeDishImage()" id="analyze-dish-btn" disabled>
+                        <i class="fas fa-magic"></i>
+                        Recreate This Dish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recipe Result Page -->
+    <div id="recipe-page" class="page">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>RecipeMagic</span>
+                </div>
+                <div class="nav-menu">
+                    <button class="nav-btn back-btn" onclick="handleBackButton()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <button class="nav-btn favorites-btn" onclick="showFavorites()">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                        <span class="favorites-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Cooking Timer -->
+        <div class="cooking-timer" id="cooking-timer">
+            <div class="timer-display">
+                <i class="fas fa-clock"></i>
+                <span id="timer-text">00:00</span>
+            </div>
+            <div class="timer-controls">
+                <button class="timer-btn start-timer" onclick="startTimer()">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="timer-btn pause-timer" onclick="pauseTimer()">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button class="timer-btn reset-timer" onclick="resetTimer()">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button class="timer-btn multi-timer-btn" onclick="showMultiTimer()" title="Multi-Timer System">
+                    <i class="fas fa-layer-group"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Multi-Timer System -->
+        <div class="multi-timer-container" id="multi-timer-container" style="display: none;">
+            <div class="multi-timer-header">
+                <h3>Multi-Timer System</h3>
+                <button class="close-multi-timer" onclick="closeMultiTimer()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="multi-timers-list" id="multi-timers-list">
+                <!-- Timers will be added here dynamically -->
+            </div>
+            <button class="add-timer-btn" onclick="addNewTimer()">
+                <i class="fas fa-plus"></i>
+                Add Timer
+            </button>
+        </div>
+
+        <main class="recipe-main">
+            <!-- Close Recipe Button -->
+            <div class="close-recipe-btn" id="close-recipe-btn" onclick="closeRecipeView()" style="display: none;">
+                <i class="fas fa-times"></i>
+            </div>
+            
+            <div class="recipe-container" id="recipe-container">
+                <!-- Recipe will be dynamically loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div id="favorites-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Favorite Recipes</h2>
+                <button class="close-modal" onclick="closeFavorites()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="favorites-list" class="favorites-list">
+                    <!-- Favorites will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Creating your perfect recipe...</p>
+        </div>
+    </div>
+
+    <!-- Recipe Remix Modal -->
+    <div id="recipe-remix-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Remix Your Recipe</h2>
+                <button class="close-modal" onclick="closeRecipeRemixModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="remix-options">
+                    <button class="remix-option" onclick="remixRecipe('healthier')">
+                        <i class="fas fa-heart"></i>
+                        <span>Make Healthier</span>
+                    </button>
+                    <button class="remix-option" onclick="remixRecipe('vegan')">
+                        <i class="fas fa-leaf"></i>
+                        <span>Make Vegan</span>
+                    </button>
+                    <button class="remix-option" onclick="remixRecipe('spicy')">
+                        <i class="fas fa-pepper-hot"></i>
+                        <span>Make Spicy</span>
+                    </button>
+                    <button class="remix-option" onclick="remixRecipe('indian')">
+                        <i class="fas fa-globe-asia"></i>
+                        <span>Indian Style</span>
+                    </button>
+                    <button class="remix-option" onclick="remixRecipe('keto')">
+                        <i class="fas fa-bacon"></i>
+                        <span>Keto Version</span>
+                    </button>
+                    <button class="remix-option" onclick="remixRecipe('glutenfree')">
+                        <i class="fas fa-wheat"></i>
+                        <span>Gluten-Free</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step-by-Step Mode -->
+    <div id="step-by-step-modal" class="modal">
+        <div class="modal-content step-by-step-content">
+            <div class="modal-header">
+                <h2>Step-by-Step Cooking Mode</h2>
+                <button class="close-modal" onclick="closeStepByStepMode()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="step-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="step-progress-fill"></div>
+                    </div>
+                    <span class="step-counter" id="step-counter">Step 1 of 1</span>
+                </div>
+                <div class="step-content" id="step-content">
+                    <h3 id="step-title">Step 1</h3>
+                    <p id="step-instruction">Loading...</p>
+                </div>
+                <div class="step-navigation">
+                    <button class="step-nav-btn prev-btn" onclick="previousStep()" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button class="step-nav-btn next-btn" onclick="nextStep()">
+                        Next
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chat Assistant -->
+    <div id="chat-assistant-modal" class="modal">
+        <div class="modal-content chat-assistant-content">
+            <div class="modal-header">
+                <h2>AI Cooking Assistant</h2>
+                <button class="close-modal" onclick="closeChatAssistant()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="ai-message">
+                        <i class="fas fa-robot"></i>
+                        <p>Hello! I'm your AI cooking assistant. I can help you with substitutions, cooking tips, and recipe questions. How can I assist you today?</p>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="Ask about substitutions, cooking tips, or recipe questions..." onkeypress="handleChatInputKeypress(event)">
+                    <button class="chat-send-btn" onclick="sendChatMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="voice-chat-btn" onclick="toggleVoiceChat()">
+                    <i class="fas fa-microphone"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dietary Filters Modal -->
+    <div id="dietary-filters-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Dietary Preferences</h2>
+                <button class="close-modal" onclick="closeDietaryFilters()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="dietary-options">
+                    <label class="dietary-option">
+                        <input type="checkbox" id="vegetarian" value="vegetarian">
+                        <span class="checkmark"></span>
+                        <i class="fas fa-leaf"></i>
+                        Vegetarian
+                    </label>
+                    <label class="dietary-option">
+                        <input type="checkbox" id="vegan" value="vegan">
+                        <span class="checkmark"></span>
+                        <i class="fas fa-seedling"></i>
+                        Vegan
+                    </label>
+                    <label class="dietary-option">
+                        <input type="checkbox" id="keto" value="keto">
+                        <span class="checkmark"></span>
+                        <i class="fas fa-bacon"></i>
+                        Keto
+                    </label>
+                    <label class="dietary-option">
+                        <input type="checkbox" id="glutenfree" value="glutenfree">
+                        <span class="checkmark"></span>
+                        <i class="fas fa-wheat"></i>
+                        Gluten-Free
+                    </label>
+                    <label class="dietary-option">
+                        <input type="checkbox" id="dairyfree" value="dairyfree">
+                        <span class="checkmark"></span>
+                        <i class="fas fa-cheese"></i>
+                        Dairy-Free
+                    </label>
+                    <label class="dietary-option">
+                        <input type="checkbox" id="lowcarb" value="lowcarb">
+                        <span class="checkmark"></span>
+                        <i class="fas fa-carrot"></i>
+                        Low-Carb
+                    </label>
+                </div>
+                <button class="apply-filters-btn" onclick="applyDietaryFilters()">
+                    Apply Filters
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meal Planner -->
+    <div id="meal-planner-modal" class="modal">
+        <div class="modal-content meal-planner-content">
+            <div class="modal-header">
+                <h2>Weekly Meal Planner</h2>
+                <button class="close-modal" onclick="closeMealPlanner()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="meal-planner-grid">
+                    <div class="day-column" data-day="monday">
+                        <h3>Monday</h3>
+                        <div class="meal-slot" data-meal="breakfast">
+                            <i class="fas fa-sun"></i>
+                            <span>Breakfast</span>
+                        </div>
+                        <div class="meal-slot" data-meal="lunch">
+                            <i class="fas fa-cloud-sun"></i>
+                            <span>Lunch</span>
+                        </div>
+                        <div class="meal-slot" data-meal="dinner">
+                            <i class="fas fa-moon"></i>
+                            <span>Dinner</span>
+                        </div>
+                    </div>
+                    <div class="day-column" data-day="tuesday">
+                        <h3>Tuesday</h3>
+                        <div class="meal-slot" data-meal="breakfast">
+                            <i class="fas fa-sun"></i>
+                            <span>Breakfast</span>
+                        </div>
+                        <div class="meal-slot" data-meal="lunch">
+                            <i class="fas fa-cloud-sun"></i>
+                            <span>Lunch</span>
+                        </div>
+                        <div class="meal-slot" data-meal="dinner">
+                            <i class="fas fa-moon"></i>
+                            <span>Dinner</span>
+                        </div>
+                    </div>
+                    <!-- More days can be added similarly -->
+                </div>
+                <div class="meal-planner-actions">
+                    <button class="generate-meal-plan-btn" onclick="generateMealPlan()">
+                        <i class="fas fa-magic"></i>
+                        Generate Meal Plan
+                    </button>
+                    <button class="grocery-list-btn" onclick="generateGroceryListFromPlan()">
+                        <i class="fas fa-shopping-cart"></i>
+                        Grocery List
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

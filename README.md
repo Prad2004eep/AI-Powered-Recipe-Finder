@@ -413,8 +413,6 @@ We welcome contributions! Here's how you can help:
 
 ### 🌟 If this project helped you, please give it a star!
 
-[![Star History Chart](https://api.star-history.com/button.svg?url=https://github.com/Prad2004eep/AI-Powered-Recipe-Finder&style=flat)]
-
 Made with ❤️ by [Prad2004eep](https://github.com/Prad2004eep)
 
 [⬆ Back to top](#readme)

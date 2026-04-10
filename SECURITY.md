@@ -14,7 +14,13 @@ This document outlines security best practices for RecipeMagic development and d
 1. **Environment Variables (Recommended)**:
    ```bash
    # Create .env file (already in .gitignore)
-   GROQ_API_KEY=your_actual_groq_key
+   APP_ENV=development
+   PORT=3000
+   ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+   API_PROXY_BASE_URL=http://localhost:3000/api
+   RECIPE_API_URL=https://api.groq.com/openai/v1/chat/completions
+   RECIPE_API_KEY=your_actual_recipe_key
+   YOUTUBE_API_URL=https://www.googleapis.com/youtube/v3/search
    YOUTUBE_API_KEY=your_actual_youtube_key
    ```
 
@@ -27,7 +33,11 @@ This document outlines security best practices for RecipeMagic development and d
 1. **Environment Variables**:
    ```bash
    # Set in hosting environment
-   export GROQ_API_KEY=your_production_key
+   export APP_ENV=production
+   export API_PROXY_BASE_URL=https://your-proxy.example.com/api
+   export RECIPE_API_URL=https://api.groq.com/openai/v1/chat/completions
+   export RECIPE_API_KEY=your_production_key
+   export YOUTUBE_API_URL=https://www.googleapis.com/youtube/v3/search
    export YOUTUBE_API_KEY=your_production_key
    ```
 
@@ -50,17 +60,27 @@ This document outlines security best practices for RecipeMagic development and d
 #### Code Security
 ```javascript
 // ❌ BAD - Hardcoded keys
-const GROQ_API_KEY = 'gsk_actual_key_here';
+const RECIPE_API_KEY = 'hardcoded-secret';
 
-// ✅ GOOD - Environment variables
-const GROQ_API_KEY = process.env.GROQ_API_KEY || 'fallback_key';
+// ❌ BAD - Static frontend trying to read secrets directly
+const RECIPE_API_KEY = process.env.RECIPE_API_KEY;
 
-// ✅ GOOD - With validation
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
-if (!GROQ_API_KEY) {
-    throw new Error('GROQ_API_KEY environment variable is required');
-}
+// ✅ GOOD - Browser reads only public config
+const API_PROXY_BASE_URL = window.APP_CONFIG.API_PROXY_BASE_URL;
+
+// ✅ GOOD - CI or proxy runtime reads the real secret
+const recipeApiKey = process.env.RECIPE_API_KEY;
 ```
+
+#### Static Frontend Constraint
+- GitHub Pages cannot hide a secret that is shipped to the browser.
+- Keep real API keys in `.env`, GitHub Secrets, or a serverless/backend runtime.
+- Expose only safe public values, such as `API_PROXY_BASE_URL`, through generated runtime config.
+
+#### Backend Proxy Pattern
+- The backend or serverless layer should be the only component that reads `RECIPE_API_KEY` and `YOUTUBE_API_KEY`.
+- The browser should call only your own `/api/*` endpoints.
+- Restrict cross-origin access with `ALLOWED_ORIGINS`.
 
 #### Git Security
 ```bash

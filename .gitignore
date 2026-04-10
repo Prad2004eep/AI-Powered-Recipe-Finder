@@ -4,10 +4,6 @@
 .env.production
 .env.development
 
-# API Keys in code (for security)
-**/script.js
-!/script.js.bak
-
 # Dependencies
 node_modules/
 npm-debug.log*
@@ -117,6 +113,7 @@ Thumbs.db
 # Local configuration files
 config.local.js
 config.local.json
+config.generated.local.js
 
 # Database files
 *.db

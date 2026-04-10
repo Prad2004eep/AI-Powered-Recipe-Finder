@@ -1,0 +1,116 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  quality-security-test:
+    name: Quality, Security, and API Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate public runtime config
+        run: npm run build:config
+        env:
+          APP_ENV: production
+          API_PROXY_BASE_URL: ${{ vars.API_PROXY_BASE_URL }}
+
+      - name: Run lint checks
+        run: npm run lint
+
+      - name: Run secret scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          extra_args: --results=verified,unknown --fail
+
+      - name: Start backend for integration validation
+        run: |
+          npm start > backend.log 2>&1 &
+          sleep 5
+        shell: bash
+        env:
+          APP_ENV: test
+          PORT: 3000
+          ALLOWED_ORIGINS: http://127.0.0.1:3000
+          API_PROXY_BASE_URL: http://127.0.0.1:3000/api
+          RECIPE_API_URL: ${{ secrets.RECIPE_API_URL }}
+          RECIPE_API_KEY: ${{ secrets.RECIPE_API_KEY }}
+          RECIPE_API_MODEL: ${{ secrets.RECIPE_API_MODEL }}
+          YOUTUBE_API_URL: https://www.googleapis.com/youtube/v3/search
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+
+      - name: Validate backend API routes
+        run: npm run test:api
+        env:
+          BACKEND_BASE_URL: http://127.0.0.1:3000
+          YOUTUBE_SEARCH_QUERY: Paneer Butter Masala recipe
+
+      - name: Print backend log on failure
+        if: failure()
+        run: cat backend.log
+        shell: bash
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: quality-security-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate public runtime config
+        run: npm run build:config
+        env:
+          APP_ENV: production
+          API_PROXY_BASE_URL: ${{ vars.API_PROXY_BASE_URL }}
+
+      - name: Prepare static site artifact
+        run: |
+          mkdir public
+          cp index.html public/index.html
+          cp style.css public/style.css
+          cp script.js public/script.js
+          cp config.js public/config.js
+          cp README.md public/README.md
+          cp SECURITY.md public/SECURITY.md
+          if [ -d assets ]; then cp -r assets public/assets; fi
+        shell: bash
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages

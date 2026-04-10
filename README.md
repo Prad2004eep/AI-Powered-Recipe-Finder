@@ -85,39 +85,90 @@ A modern, intelligent web application that transforms your ingredients into deli
    npx serve .
    ```
 
-3. **Configure API Keys**:
+3. **Configure environment variables**:
    - Create a `.env` file in the project root:
    ```env
-   GROQ_API_KEY=your_groq_api_key_here
+   APP_ENV=development
+   PORT=3000
+   ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+   API_PROXY_BASE_URL=http://localhost:3000/api
+   RECIPE_API_URL=https://api.groq.com/openai/v1/chat/completions
+   RECIPE_API_KEY=your_recipe_api_key_here
+   RECIPE_API_MODEL=llama-3.1-8b-instant
+   YOUTUBE_API_URL=https://www.googleapis.com/youtube/v3/search
    YOUTUBE_API_KEY=your_youtube_api_key_here
    ```
-   - Or edit `script.js` and replace the placeholder API keys:
-   ```javascript
-   const GROQ_API_KEY = 'your-groq-api-key-here';
-   const YOUTUBE_API_KEY = 'your-youtube-api-key-here';
+   - Install tooling and generate browser-safe runtime config:
+   ```bash
+   npm install
+   npm run build:config
    ```
+   - Start the backend proxy:
+   ```bash
+   npm start
+   ```
+   - `config.js` contains only public runtime values.
+   - Real API keys stay in `.env`, GitHub Secrets, or the backend runtime.
 
 ## 🔧 Configuration
 
 ### API Setup
 
-1. **GROQ API Key**:
+1. **Recipe API Key**:
    - Visit [GROQ Console](https://console.groq.com/)
    - Create a new API key
-   - Replace the placeholder in `script.js` line 19
+   - Save it as `RECIPE_API_KEY`
+   - Do not expose it in browser JavaScript
 
 2. **YouTube Data API Key**:
    - Visit [Google Cloud Console](https://console.cloud.google.com/)
    - Enable YouTube Data API v3
    - Create an API key
-   - Replace the placeholder in `script.js` line 20
+   - Save it as `YOUTUBE_API_KEY`
+   - Prefer routing it through the same proxy used by the app
 
 ### Environment Variables
-For production deployment, you can use environment variables:
-```javascript
-const GROQ_API_KEY = process.env.GROQ_API_KEY || 'your-fallback-key';
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY || 'your-fallback-key';
+For production deployment, use environment variables and generate the public runtime config from them:
+```bash
+APP_ENV=production
+API_PROXY_BASE_URL=https://your-proxy.example.com/api
+RECIPE_API_URL=https://api.groq.com/openai/v1/chat/completions
+RECIPE_API_KEY=your_recipe_api_key
+RECIPE_API_MODEL=llama-3.1-8b-instant
+YOUTUBE_API_KEY=your_youtube_api_key
 ```
+
+### Security Model
+- Browser code reads only `config.js`, which contains public runtime values only.
+- Real keys are stored in `.env` and consumed by the backend or serverless runtime.
+- The backend exposes `/api/recipe`, `/api/youtube-search`, and `/api/health`.
+- `api/index.js` is included so the same proxy can be deployed as a Vercel-style serverless function.
+
+## CI/CD Pipeline
+
+- Workflow file: `.github/workflows/deploy.yml`
+- Trigger: every push to `main`
+- Stages:
+  - ESLint linting
+  - TruffleHog secret scanning
+  - Start local backend in CI
+  - Validate backend API routes through `test-api.js`
+  - Static deployment to the `gh-pages` branch
+
+### Required GitHub Configuration
+- Repository variable:
+  - `API_PROXY_BASE_URL`
+- Repository secrets:
+  - `RECIPE_API_URL`
+  - `RECIPE_API_KEY`
+  - `RECIPE_API_MODEL`
+  - `YOUTUBE_API_KEY`
+- In GitHub Pages settings, select the `gh-pages` branch.
+
+### Backend Deployment Options
+- Local/backend host: run `npm start` with `.env`
+- Serverless: deploy `api/index.js` to Vercel and set the same environment variables there
+- Separate frontend host: set `API_PROXY_BASE_URL` to your deployed backend URL
 
 ## 📖 Usage Guide
 
@@ -195,15 +246,12 @@ AI-Powered-Recipe-Finder/
 git clone https://github.com/yourusername/RecipeMagic.git
 cd RecipeMagic
 
-# Install dependencies (if using package.json)
+# Install dependencies
 npm install
 
-# Start development server
+# Generate browser config and start backend
+npm run build:config
 npm start
-# Or using Python
-python -m http.server 8000
-# Or using Node.js serve
-npx serve .
 ```
 
 ### Building for Production
@@ -221,7 +269,14 @@ npm run build:prod
 ### Environment Configuration
 Create a `.env` file for local development:
 ```
-GROQ_API_KEY=your_development_key
+APP_ENV=development
+PORT=3000
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+API_PROXY_BASE_URL=http://localhost:3000/api
+RECIPE_API_URL=https://api.groq.com/openai/v1/chat/completions
+RECIPE_API_KEY=your_development_key
+RECIPE_API_MODEL=llama-3.1-8b-instant
+YOUTUBE_API_URL=https://www.googleapis.com/youtube/v3/search
 YOUTUBE_API_KEY=your_youtube_api_key
 ```
 
@@ -292,14 +347,18 @@ docker run -p 8080:8080 ai-powered-recipe-finder
 
 ### Environment Variables
 Set these in your hosting environment:
-- `GROQ_API_KEY`: Your GROQ API key
+- `RECIPE_API_KEY`: Your recipe generation API key
+- `RECIPE_API_URL`: The recipe generation endpoint
+- `RECIPE_API_MODEL`: The recipe model used in validation
 - `YOUTUBE_API_KEY`: Your YouTube Data API key
+- `API_PROXY_BASE_URL`: Public URL of your backend or serverless proxy
 - `NODE_ENV`: Set to 'production'
 
 ## 🔒 Security Considerations
 
 ### API Key Protection
 - Never commit API keys to version control
+- Never inject real API keys into browser JavaScript
 - Use environment variables in production
 - Implement rate limiting on server-side (if applicable)
 - Regular key rotation recommended

@@ -1,7 +1,6 @@
 # AI-Powered Recipe Finder 🍛
 
 ![RecipeMagic Logo](https://img.shields.io/badge/AI--Powered%20Recipe%20Finder-blue?style=for-the-badge&logo=react)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3)
@@ -448,10 +447,6 @@ We welcome contributions! Here's how you can help:
 - Include expected vs actual behavior
 - Add screenshots or screen recordings if possible
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - **GROQ**: For providing the amazing AI technology
@@ -470,16 +465,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Contact
 - 📧 Create an issue for technical support
-- 🌐 Visit our [website](https://yourwebsite.com) for live demo
-- 🐦 Follow us on [Twitter](https://twitter.com/yourhandle) for updates
 
 ---
 
 <div align="center">
 
 ### 🌟 If this project helped you, please give it a star!
-
-[![Star History Chart](https://api.star-history.com/button.svg?url=https://github.com/Prad2004eep/AI-Powered-Recipe-Finder&style=flat)]
 
 Made with ❤️ by [Prad2004eep](https://github.com/Prad2004eep)
 
